@@ -11,12 +11,13 @@ punctuations = punctuation
 char_list = [letters_low,letters_up,numbers,punctuations]
 
 class PasswordGen:
+	
+	def __init__(self,base):
 
-	def __init__(self,base,low,upper,digit,punct):
-		self.low = low
-		self.upper = upper
-		self.digit = digit
-		self.punct = punct
+		self.low = IntVar()
+		self.upper = IntVar()
+		self.digit=IntVar()
+		self.punct=IntVar()
 
 		self.base = base
 		base.title('Password Generator')
@@ -64,7 +65,8 @@ class PasswordGen:
 		self.lbl_length = Label(base,text = 'Password Length')
 		self.lbl_length.grid(column = 0,row = 6)
 
-		self.inputbox_length = Entry(base,width=10)
+		vcmd = base.register(self.validate)
+		self.inputbox_length = Entry(base,width=10,validate="key",validatecommand=(vcmd,'%P'))
 		self.inputbox_length.grid(column = 1,row = 6)
 
 		self.password_lbl = Label(base,text = 'Password')
@@ -83,6 +85,14 @@ class PasswordGen:
 		self.exit_btn.grid(column =0, row = 10)
 
 
+	def validate(self,text):
+		if text == "":
+			return True
+		elif text.isdigit():
+			return True 
+		else:
+			return False
+
 
 	def get_choice(self):
 		password_str = ''
@@ -96,19 +106,13 @@ class PasswordGen:
 	def generate(self):
 		password_str = ''
 		choice = PasswordGen.get_choice(self)
-		length = self.inputbox_length.get()
+		length = self.inputbox_length.get()	
 
-		if length != '':
-			try:
-				for i in range(int(length)):
-					password_str = password_str + secrets.choice(choice)
-				self.display_password.delete(0,'end')
-				self.display_password.insert(0,password_str)
-
-			except IndexError:
-				messagebox.showinfo('Select option','Please select at least on option as "Yes" ')
-		else:
-			messagebox.showinfo('Enter Length','Please Enter the Length')
+		
+		for i in range(int(length)):
+			password_str = password_str + secrets.choice(choice)
+		self.display_password.delete(0,'end')
+		self.display_password.insert(0,password_str)
 
 	def copy(self):
 		pyperclip.copy(self.display_password.get())
@@ -117,6 +121,6 @@ class PasswordGen:
 
 	
 root = Tk()
-gui = PasswordGen(root,low = IntVar(),upper = IntVar(),digit=IntVar(),punct=IntVar())
+gui = PasswordGen(root)
 root.mainloop()
 

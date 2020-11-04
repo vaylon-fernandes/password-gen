@@ -26,7 +26,7 @@ class PasswordGen:
 		self.title_lbl = Label(base,text = 'Password Generator')
 		self.title_lbl.grid(column =0,row=1)
 		
-		self.lbl_lowercase = Label(base,text = 'Do you want lowercase letters?:')
+		self.lbl_lowercase = Label(base,text = 'Do you want lowercase letters (a-z) ?:')
 		self.lbl_lowercase.grid(column = 0,row = 2)
 
 		self.lower_yes = Radiobutton(base,text = 'Yes', variable = self.low, value = 1)
@@ -35,7 +35,7 @@ class PasswordGen:
 		self.lower_no = Radiobutton(base,text = 'No', variable = self.low, value = 0)
 		self.lower_no.grid(column = 2,row = 2)
 
-		self.lbl_uppercase = Label(base,text = 'Do you want uppercase letters?:')
+		self.lbl_uppercase = Label(base,text = 'Do you want uppercase letters (A-Z) ?:')
 		self.lbl_uppercase.grid(column = 0,row = 3)
 		
 		self.upper_yes = Radiobutton(base,text = 'Yes', variable = self.upper, value = 1)
@@ -44,7 +44,7 @@ class PasswordGen:
 		self.upper_no = Radiobutton(base,text = 'No', variable = self.upper, value = 0)
 		self.upper_no.grid(column = 2,row = 3,sticky = 'e')
 
-		self.lbl_digits = Label(base,text = 'Do you want numbers?:')
+		self.lbl_digits = Label(base,text = 'Do you want numbers (0-9) ?:')
 		self.lbl_digits.grid(column = 0,row = 4)
 		
 		self.digits_yes = Radiobutton(base,text = 'Yes', variable = self.digit, value = 1)
@@ -53,7 +53,7 @@ class PasswordGen:
 		self.digits_no = Radiobutton(base,text = 'No', variable = self.digit, value = 0)
 		self.digits_no.grid(column = 2,row = 4,sticky = 'e')
 
-		self.lbl_punct = Label(base,text = 'Do you want punctuation marks?:')
+		self.lbl_punct = Label(base,text = 'Do you want punctuation marks \n(eg:!\"#$%&\'()*+,-.) ?:')
 		self.lbl_punct.grid(column = 0,row = 5)
 		
 		self.punct_yes = Radiobutton(base,text = 'Yes', variable = self.punct, value = 1)
@@ -105,9 +105,8 @@ class PasswordGen:
 
 	def generate(self):
 		password_str = ''
-		choice = PasswordGen.get_choice(self)
+		choice = self.get_choice()
 		length = self.inputbox_length.get()	
-
 		
 		for i in range(int(length)):
 			password_str = password_str + secrets.choice(choice)

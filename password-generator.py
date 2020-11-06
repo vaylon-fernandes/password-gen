@@ -80,7 +80,7 @@ class PasswordGen:
 		self.password_lbl.pack()
 
 		self.scroll_bar = Scrollbar(self.mid_frame,orient='''horizontal''')
-		self.scroll_bar.pack(fill='''x''')
+		self.scroll_bar.pack(side='''bottom''',fill='''x''')
 
 		self.display_password = Listbox(self.mid_frame,height=1,width = 30,xscrollcommand=self.scroll_bar.set)
 		self.display_password.pack(side='''left''')
